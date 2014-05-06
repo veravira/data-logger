@@ -1,0 +1,39 @@
+cp grp-joined/part-r-00000 cl-price-body-type.csv
+1) Cluster are built with cluster.pig
+
+Data is stored in /Users/Vera/dev/sample/src/main/script/cl-price-body-type.csv
+it's TAB delimitered
+
+2) shell script and pig macro based on trim_id returns 5 similar cars
+a) returns the whole cluster 
+b) calls another UDF that takes Price of the given car and computes absolute difference in price of cars from 
+	the same cluster as given, sorts them 
+c) return s only 5 cars that have the least of the differences  
+__________________
+Notes/ideas use datafu
+  
+setwd()
+sample<-read.csv(file='/Users/vera.kalinichenko/Desktop/test.txt', sep='\t', header=T);
+
+getwd()
+
+
+In R
+
+n<-0
+m<-0
+l50k<-c()
+g50k<-c()
+  for (i in 1:size)
+  {
+    if(msrp[i]<50000)
+    {
+      l50k[n] <- msrp[i]
+      n<-n+1
+    }
+    else {
+         g50k[m] <- msrp[i]
+         m<-m+1
+    }
+  }
+}
