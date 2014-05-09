@@ -18,7 +18,8 @@
                <simple>Hello Web Application, how are you?</simple>
             </transform>
             <to uri="stream:out"/>
-            <to uri="elasticsearch://elasticsearch[]"/>
+            <to uri="elasticsearch://elasticsearch?operation"/>
+            <!--  ?operation=INDEX&indexName=sample&indexType=sample  -->
         </route>
     </camelContext>
 
