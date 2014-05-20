@@ -40,11 +40,13 @@
       <version>2.13.0</version>
     </dependency>
     <!--  JDBC  -->
+   
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>sqljdbc4</artifactId>
       <version>4.0.2206.100</version>                    
 	</dependency>
+	
 	<dependency>
             <groupId>org.xbib.elasticsearch.plugin</groupId>
             <artifactId>elasticsearch-river-jdbc</artifactId>
@@ -52,6 +54,7 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+      
     <!-- Spring Web -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -89,12 +92,13 @@
 	    <version>2.13.0</version>
 	    <!-- use the same version as your Camel core version -->
 	</dependency>
-	 <dependency>
+	 <dependency> 
             <groupId>com.gamblitgaming.commons</groupId>
             <artifactId>gamblitgaming-jdbc</artifactId>
+
             <version>1.1.0-SNAPSHOT</version>
         </dependency>
- <dependency>
+ 	<dependency>
           <groupId>org.apache.pig</groupId>
           <artifactId>pig</artifactId>
           <version>0.12.0</version>
@@ -142,6 +146,7 @@
               </exclusion>
           </exclusions>
       </dependency>
+
   </dependencies>
 
   <build>
