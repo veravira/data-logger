@@ -78,7 +78,11 @@
       <artifactId>log4j</artifactId>
       <version>1.2.17</version>
     </dependency>
-
+ <dependency>
+    <groupId>org.opengis</groupId>
+    <artifactId>geoapi</artifactId>
+    <version>3.0.0</version>
+  </dependency>
     <!-- testing -->
     <dependency>
       <groupId>org.apache.camel</groupId>

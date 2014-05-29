@@ -1,0 +1,19 @@
+curl -XPUT 'http://localhost:9200/_snapshot/my-backup' -d '
+	{
+	     "type" : "fs",
+	     "settings": 
+	     	{
+	     	          "location": "/mount/tmp-vera/backup",
+	     	          "compress":true
+	     	}
+	}'
+
+# to retreive that schema backup is created
+
+curl -XGET 'http://localhost:9200/_snapshot/may-28?pretty'
+
+# backup/put the data to the snapshot
+curl -XPUT "localhost:9200/_snapshot/my-backup/snapshot_1?wait_for_completion=true"
+
+#restore
+curl -XPOST "localhost:9200/_snapshot/my_backup/snapshot_1/_restore"

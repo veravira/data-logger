@@ -1,0 +1,17 @@
+curl -XPUT http://localhost:9200/bt -d '
+{ "bar": {
+	"properties" : 
+	{
+	     "dt" :{"type" : "date", "index":"not_analyzed"},
+	     "reel0":{"type" :"string"},
+	     "reel1":{"type" :"string"},
+	     "reel2":{"type" :"string"},
+	     "reel3":{"type" :"string"},
+	     "reel4":{"type" :"string"}, 
+	     "applicationName":{"type" :"string"}
+
+	}
+	
+
+	}
+}'

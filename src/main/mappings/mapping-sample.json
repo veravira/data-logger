@@ -1,0 +1,43 @@
+All options:
+
+PUT /{index}/_mapping/{type}
+where
+
+{index}
+
+blank | * | _all | glob pattern | name1, name2, …
+
+{type}
+
+Name of the type to add. Must be the name of the type defined in the body.
+
+Instead of _mapping you can also use the plural _mappings. The uri PUT /{index}/{type}/_mapping is still supported for backwardscompatibility.
+
+
+
+$ curl -XPUT 'http://localhost:9200/kimchy,elasticsearch/tweet/_mapping' -d '
+{
+    "tweet" : {
+        "properties" : {
+            "message" : {"type" : "string", "store" : true }
+        }
+    }
+}
+'
+
+$ curl -XPUT 'http://localhost:9200/bt/test/_mapping' -d '
+{
+    "test" : {
+        "properties" : {
+            "message" : {"type" : "string", "store" : true },
+            "dt" :{"type" : "date", "index":"not_analyzed"},
+		    "reel0":{"type" :"string"},
+	        "reel1":{"type" :"string"},
+	        "reel2":{"type" :"string"},
+	        "reel3":{"type" :"string"},
+	        "reel4":{"type" :"string"}, 
+	        "applicationName":{"type" :"string"}
+        }
+    }
+}
+'

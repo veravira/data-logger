@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -50,9 +51,12 @@ import org.xbib.elasticsearch.river.jdbc.RiverSource;
 import org.xbib.elasticsearch.river.jdbc.strategy.simple.SimpleRiverFlow;
 import org.xbib.elasticsearch.river.jdbc.strategy.simple.SimpleRiverMouth;
 import org.xbib.elasticsearch.river.jdbc.strategy.simple.SimpleRiverSource;
+import org.xbib.elasticsearch.river.jdbc.support.SQLCommand;
 import org.xbib.elasticsearch.river.jdbc.support.RiverContext;
 import org.xbib.elasticsearch.river.jdbc.support.RiverKeyValueStreamListener;
 import org.xbib.io.keyvalue.KeyValueStreamListener;
+
+import antlr.collections.List;
 
 
 
@@ -72,20 +76,35 @@ public class EsRunner {
     
     private final static AtomicLong counter = new AtomicLong();
     
-    private String resource = "/Users/vera.kalinichenko/data/datascience/pig-template/src/main/pig/correctedRtp/simple.json";
+    private String resource = "/Users/vera.kalinichenko/data/datascience/pig-template/src/main/pig/correctedRtp/config.json";
     private String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private String user = "dev-pm";
     String url = "jdbc:sqlserver://10.0.5.60:1433;databaseName=Interactive-Logging";
     String url1 = "jdbc:sqlserver://10.0.5.60:1433;databaseName=Interactive-PatronManager";
     
     private String password = "gwpm%6234";
+    String storedProcSQL = "Exec App.GETAllWagers";
     
+    
+    public EsRunner()
+    {
+    	try {
+    		createClient(driver, url, user, password);
+    	}
+    	catch (Exception exc) {
+    		System.out.println("");
+    	}
+    }
     public RiverSource getRiverSource() {
         return new SimpleRiverSource();
     }
    
     public RiverContext getRiverContext() {
-        return new RiverContext();
+    	if (context == null){
+    		context = new RiverContext();
+    		
+    	}
+    	return context;
     }
 
     public void createClient(String driver, String starturl, String user, String password)
@@ -100,6 +119,13 @@ public class EsRunner {
                 .setMaxRetryWait(TimeValue.timeValueSeconds(5))
                 .setLocale("en");
         context.contextualize();
+        ArrayList<SQLCommand> sql = new ArrayList<SQLCommand>();
+        SQLCommand command = new SQLCommand();
+        command.setCallable(true);
+        command.setSQL(storedProcSQL);
+        sql.add(command);
+        context.setStatements(sql);
+        createIndices();
     }
    
     private Settings defaultSettings() {
@@ -301,9 +327,9 @@ public class EsRunner {
             throws Exception {
     	System.err.println("************************************* Hello !!!!!!!!!!!!");
     	String riverResource = resource;
-    	String storedProcSQL = "Exec App.GETAllWagers";
-    	createClient(driver, url, user, password);
-        Connection connection = source.connectionForWriting();
+    	
+    	
+//        Connection connection = source.connectionForWriting();
         System.err.println("*************************************");
         // create stored procedure
 //        Statement statement = connection.createStatement();
@@ -316,7 +342,10 @@ public class EsRunner {
 //        	System.out.println("playerId = " + playerId + " outcome = " + wagerOut);
 //        }
         Connection con =  source.connectionForReading();
+        source.riverContext(getRiverContext());
         source.fetch();
+        
+       
         
 //        createClient(driver, url1, user, password);
 //        Connection connection1 = source.connectionForWriting();
@@ -355,15 +384,15 @@ public class EsRunner {
 //        statement.close();
 
         
-        Client client2 = client("2");
-        RiverSettings settings = riverSettings(riverResource);
-        JDBCRiver river = new JDBCRiver(new RiverName(INDEX, TYPE), settings, client2);
-        river.start();
-        Thread.sleep(10000L); // let the river run
-        System.err.println("Try out out client result");
-        System.err.println(client2.prepareSearch(INDEX).execute().actionGet().getHits().getTotalHits());
-        source.closeWriting();
-        river.close();
+//        Client client2 = client("2");
+//        RiverSettings settings = riverSettings(riverResource);
+//        JDBCRiver river = new JDBCRiver(new RiverName(INDEX, TYPE), settings, client2);
+//        river.start();
+//        Thread.sleep(10000L); // let the river run
+//        System.err.println("Try out out client result");
+//        System.err.println(client2.prepareSearch(INDEX).execute().actionGet().getHits().getTotalHits());
+//        source.closeWriting();
+//        river.close();
     }
     public void createIndices() throws Exception {
         startNode("1").client();
