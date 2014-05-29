@@ -41,3 +41,37 @@ $ curl -XPUT 'http://localhost:9200/bt/test/_mapping' -d '
     }
 }
 '
+
+$ curl -XPUT 'http://localhost:9200/bt/test/_mapping' -d '
+{ 
+	"test" : {
+    "mappings" : {
+      "index" : {
+        "properties" : {
+          "message" : {
+            "type" : "string"
+          },
+          "dt" : {
+            "type" : "date",
+            "format" : "dateOptionalTime"      
+          },          
+          "reel0" : {
+            "type" : "string"
+          },
+          "reel1" : {
+            "type" : "string"
+          },
+          "reel2" : {
+            "type" : "string"
+          },
+          "reel3" : {
+            "type" : "string"
+          },
+          "reel4" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}
