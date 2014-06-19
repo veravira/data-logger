@@ -29,18 +29,80 @@ $ curl -XPUT 'http://localhost:9200/bt/test/_mapping' -d '
 {
     "test" : {
         "properties" : {
+        	"_timestamp" : { "enabled" : true },
             "message" : {"type" : "string", "store" : true },
-            "dt" :{"type" : "date", "index":"not_analyzed"},
-		    "reel0":{"type" :"string"},
-	        "reel1":{"type" :"string"},
-	        "reel2":{"type" :"string"},
-	        "reel3":{"type" :"string"},
-	        "reel4":{"type" :"string"}, 
+            "dt" :{"type" : "date", "index":"not_analyzed", "format" : "dateOptionalTime", "store" : true},
+		    "reel0":{"type" :"string", "store" : true},
+	        "reel1":{"type" :"string", "store" : true},
+	        "reel2":{"type" :"string", "store" : true},
+	        "reel3":{"type" :"string", "store" : true},
+	        "reel4":{"type" :"string", "store" : true}, 
 	        "applicationName":{"type" :"string"}
         }
     }
 }
 '
+****************************************************************************************************
+## working sample 
+bars.json below 
+{
+"test" : {
+        "properties" : {
+            "_timestamp" : { "enabled" : true },
+            "message" : {"type" : "string", "store" : true },
+            "dt" :{"type" : "date", "index":"not_analyzed", "format" : "dateOptionalTime", "store" : true},
+                "reel0":{"type" :"string", "store" : true},
+                "reel1":{"type" :"string", "store" : true},
+                "reel2":{"type" :"string", "store" : true},
+                "reel3":{"type" :"string", "store" : true},
+                "reel4":{"type" :"string", "store" : true},
+                "applicationName":{"type" :"string"}
+        }
+    },
+"index" : "bt",
+"type" : "test"
+}
+
+# to call it
+curl -XPUT 'http://localhost:9200/bt/test/_mapping' -d @bars.json
+
+****************************************************************************************************
+$ curl -XPUT 'http://localhost:9200/my_index/my_type/_mapping' -d '
+{
+    "my_type" : {
+        "properties" : {
+            "_timestamp" : { "enabled" : true },
+            "message" : {"type" : "string", "store" : true },
+            "dt" :{"type" : "date", "index":"not_analyzed", "format" : "dateOptionalTime", "store" : true},
+                "reel0":{"type" :"string", "store" : true},
+                "reel1":{"type" :"string", "store" : true},
+                "reel2":{"type" :"string", "store" : true},
+                "reel3":{"type" :"string", "store" : true},
+                "reel4":{"type" :"string", "store" : true},
+                "applicationName":{"type" :"string"}
+        }
+    }
+}
+'
+****************************************************************************************************
+ "timestamp" : { "type" : "date", "index": "not_analyzed", "format": "dd/MMM/yyyy:HH:mm:ss" },   
+****************************************************************************************************
+
+curl -XPOST localhost:9200/bt -d '{
+    "settings" : {
+        "number_of_shards" : 5
+    },
+    "mappings" : {
+        "test" : {
+            "properties" : {
+                "timestamp" : { "type" : "date", "index": "not_analyzed", "format": "dd/MMM/yyyy:HH:mm:ss" }                
+            }
+        }
+    }
+}'
+
+****************************************************************************************************
+curl -XGET 'http://localhost:9200/bt/test'
 
 $ curl -XPUT 'http://localhost:9200/bt/test/_mapping' -d '
 { 

@@ -1,0 +1,38 @@
+curl -XPUT 'localhost:9200/_river/my_oil/_meta' -d '{
+    "type" : "web",
+    "crawl" : {
+        "index" : "my_oil",
+        "url" : ["http://finance.yahoo.com/q/"],
+        "includeFilter" : ["http://finance.yahoo.com/q/.*"],
+        "maxDepth" : 3,
+        "maxAccessCount" : 100,
+        "numOfThread" : 5,
+        "interval" : 1000,
+        "target" : [
+          {
+            "pattern" : {
+              "url" : "http://finance.yahoo.com/q/.*",
+              "mimeType" : "text/html"
+            },
+            "properties" : {
+              "title" : {
+                "text" : "title"
+              },
+              "body" : {
+                "text" : "body"
+              },
+              "bodyAsHtml" : {
+                "html" : "body"
+              },
+              "projects" : {
+                "text" : "ul.nav-list li a",
+                "isArray" : true
+              }
+            }
+          }
+        ]
+    },
+    "schedule" : {
+        "cron" : "0 * 15 * * ?"
+    }
+}'

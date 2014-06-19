@@ -3,64 +3,24 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.sample.ds</groupId>
-  <artifactId>data-aggregator</artifactId>
+  <groupId>com.logging</groupId>
+  <artifactId>data-logger</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>Camel Web Application</name>
-  <description>Camel project that deploys the Camel routes as a WAR</description>
+  <name>Data Logger Application</name>
+  <description>Data Logger</description>
   <url>http://www.myorganization.org</url>
 
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <elasticsearch.version>1.1.1</elasticsearch.version>
-    <xbib.elasticsearch.support.version>1.1.0.0</xbib.elasticsearch.support.version>
-     <hadoop.version>0.20.2</hadoop.version>
+    <hadoop.version>0.20.2</hadoop.version>
   </properties>
 
   <dependencies>
-
-    <!-- Camel Dependencies -->
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-core</artifactId>
-      <version>2.13.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-spring</artifactId>
-      <version>2.13.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-stream</artifactId>
-      <version>2.13.0</version>
-    </dependency>
-    <!--  JDBC  -->
-   
-    <dependency>
-      <groupId>com.microsoft.sqlserver</groupId>
-      <artifactId>sqljdbc4</artifactId>
-      <version>4.0.2206.100</version>                    
-	</dependency>
-	
-	<dependency>
-            <groupId>org.xbib.elasticsearch.plugin</groupId>
-            <artifactId>elasticsearch-river-jdbc</artifactId>
-            <version>${xbib.elasticsearch.support.version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-      
-    <!-- Spring Web -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-web</artifactId>
-      <version>3.2.8.RELEASE</version>
-    </dependency>
 
     <!-- logging -->
     <dependency>
@@ -78,30 +38,7 @@
       <artifactId>log4j</artifactId>
       <version>1.2.17</version>
     </dependency>
- <dependency>
-    <groupId>org.opengis</groupId>
-    <artifactId>geoapi</artifactId>
-    <version>3.0.0</version>
-  </dependency>
-    <!-- testing -->
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-test-spring</artifactId>
-      <version>2.13.0</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-	    <groupId>org.apache.camel</groupId>
-	    <artifactId>camel-elasticsearch</artifactId>
-	    <version>2.13.0</version>
-	    <!-- use the same version as your Camel core version -->
-	</dependency>
-	 <dependency> 
-            <groupId>com.gamblitgaming.commons</groupId>
-            <artifactId>gamblitgaming-jdbc</artifactId>
 
-            <version>1.1.0-SNAPSHOT</version>
-        </dependency>
  	<dependency>
           <groupId>org.apache.pig</groupId>
           <artifactId>pig</artifactId>
@@ -118,10 +55,23 @@
           <version>0.12.0</version>
       </dependency>		
       <dependency>
+		    <groupId>io.searchbox</groupId>
+		  	<artifactId>jest</artifactId>
+		  	<version>0.1.1</version>
+		  	<optional>true</optional>
+		</dependency>
+	 	<dependency>
+        	<groupId>org.elasticsearch</groupId>
+        	<artifactId>elasticsearch</artifactId>
+        	<version>${elasticsearch.version}</version>
+        	<optional>true</optional>
+    	</dependency>
+    <dependency>
 		<groupId>com.google.guava</groupId>
 		<artifactId>guava</artifactId>
 		<version>17.0</version>
 	</dependency>
+    
 	<!--  hadoop  -->
 	 <dependency>
           <groupId>org.apache.hadoop</groupId>
@@ -195,12 +145,7 @@
         </configuration>
       </plugin>
 
-      <!-- plugin to deploy to JBoss AS with: mvn jboss-as:deploy (you can also do redeploy/undeploy) -->
-      <plugin>
-        <groupId>org.jboss.as.plugins</groupId>
-        <artifactId>jboss-as-maven-plugin</artifactId>
-        <version>7.4.Final</version>
-      </plugin>
+      
 
     </plugins>
   </build>

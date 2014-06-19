@@ -17,3 +17,30 @@ curl -XPUT "localhost:9200/_snapshot/my-backup/snapshot_1?wait_for_completion=tr
 
 #restore
 curl -XPOST "localhost:9200/_snapshot/my_backup/snapshot_1/_restore"
+
+
+curl -XPUT "localhost:9200/_snapshot/my-backup/snapshot_1?wait_for_completion=true"
+
+
+On June 4
+
+root@localhost backup]# curl -XGET 'http://localhost:9200/_snapshot/may-28?pretty'
+{
+  "may-28" : {
+    "type" : "fs",
+    "settings" : {
+      "compress" : "true",
+      "location" : "/Users/vera.kalinichenko/tmp-vera/backup"
+    }
+  }
+}
+
+curl -XPUT 'http://localhost:9200/_snapshot/may-28' -d '
+	{
+	     "type" : "fs",
+	     "settings": 
+	     	{
+	     	          "location": "/root/backup",
+	     	          "compress":true
+	     	}
+	}'
